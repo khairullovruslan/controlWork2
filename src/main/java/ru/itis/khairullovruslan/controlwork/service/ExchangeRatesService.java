@@ -26,12 +26,8 @@ public class ExchangeRatesService {
 
     public RateDTO getPrice(String param) throws JsonProcessingException {
 
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("app_id", KEY);
-        params.put("symbols", "RUB,%s".formatted(param));
-        String response = httpClient.get("https://openexchangerates.org/api/latest.json?app_id=%s&symbols=RUB,USD"
-                .formatted(KEY), new HashMap<>(), params);
+        String response = httpClient.get("https://openexchangerates.org/api/latest.json?app_id=%s&symbols=RUB,%s"
+                .formatted(KEY, param), new HashMap<>(),  new HashMap<>());
         System.out.println(Optional.ofNullable(objectMapper.readValue(response, new TypeReference<>() {
         })));
         return objectMapper.readValue(response, RateDTO.class);
